@@ -1,0 +1,25 @@
+body {
+    background-color:whitesmoke;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.movies__movie {
+    box-sizing: border-box;
+    padding: 20px;
+    margin: 20px;
+    border: solid 1px;
+    border-radius: 10px;
+    width: 500px;
+    background-color: white;
+}
+
+.movie__genres li{
+    list-style-type: none;
+    display: inline;
+    margin-right: 10px;
+}
