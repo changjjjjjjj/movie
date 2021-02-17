@@ -1,20 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
-class Detail extends React.Component {
-  componentDidMount() {
-    const { location, history } = this.props;
+export const Detail = () => {
+  const location = useLocation();
+  const history = useHistory();
+  useEffect(() => {
     if (location.state === undefined) {
       history.push("/");
     }
-  }
-  render() {
-    const { location } = this.props;
-    if (location.state) {
-      return <h1>{location.state.title}</h1>;
-    } else {
-      return null;
-    }
-  }
-}
+  }, [history, location]);
 
-export default Detail;
+  if (location.state) {
+    return <h1>{location.state.title}</h1>;
+  } else {
+    return null;
+  }
+};

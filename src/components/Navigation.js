@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navigation() {
+export const Navigation = () => {
   return (
     <div>
       <Link to="/">Home</Link>
@@ -9,6 +9,4 @@ function Navigation() {
       <Link to="/about">about</Link>
     </div>
   );
-}
-
-export default Navigation;
+};

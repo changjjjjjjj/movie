@@ -1,7 +1,5 @@
 import React from "react";
 
-function About(props) {
+export const About = (props) => {
   return <span>Router test</span>;
-}
-
-export default About;
+};

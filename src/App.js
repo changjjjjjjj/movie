@@ -1,11 +1,11 @@
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
-import About from "./routes/About";
-import Home from "./routes/Home";
-import Detail from "./routes/Detail";
-import Navigation from "./components/Navigation";
+import { About } from "./routes/About";
+import { Home } from "./routes/Home";
+import { Detail } from "./routes/Detail";
+import { Navigation } from "./components/Navigation";
 
-function App() {
+const App = () => {
   return (
     <HashRouter>
       <Navigation />
@@ -14,6 +14,6 @@ function App() {
       <Route path="/movie/:id" exact={true} component={Detail} />
     </HashRouter>
   );
-}
+};
 
 export default App;
