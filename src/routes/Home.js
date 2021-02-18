@@ -1,45 +1,77 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { gql, useQuery } from "@apollo/client";
+import styled from "styled-components";
 import Movie from "../components/Movie";
 
 const GET_MOVIES = gql`
   {
     movies {
       id
+      title
+      year
+      summary
       medium_cover_image
+      genres
     }
   }
 `;
 
-export const Home = () => {
-  const { loading, error, data } = useQuery(GET_MOVIES);
-  const [isLoading, setIsLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    const getMovies = async () => {
-      const {
-        data: {
-          data: { movies },
-        },
-      } = await axios.get(
-        "https://yts-proxy.nomadcoders1.now.sh/list_movies.json?sort_by=rating"
-      );
-      setMovies(movies);
-      setIsLoading(false);
-    };
-    getMovies();
-  }, []);
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
 
+const Header = styled.header`
+  background-image: linear-gradient(-45deg, #d754ab, #fd723a);
+  height: 45vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+const Title = styled.h1`
+  font-size: 60px;
+  font-weight: 600;
+  margin-bottom: 20px;
+`;
+
+const Subtitle = styled.h3`
+  font-size: 35px;
+`;
+
+const Loading = styled.div`
+  font-size: 18px;
+  opacity: 0.5;
+  font-weight: 500;
+  margin-top: 10px;
+`;
+
+const Movies = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 25px;
+  width: 60%;
+  position: relative;
+  top: -50px;
+`;
+
+export const Home = () => {
+  const { loading, data } = useQuery(GET_MOVIES);
   return (
-    <section className="container">
-      {isLoading ? (
-        <div className="loader_text">
-          <span>Loading..</span>
-        </div>
-      ) : (
-        <div className="movies">
-          {movies.map((movie) => (
+    <Container>
+      <Header>
+        <Title>Don't Know What to Watch?</Title>
+        <Subtitle>Try this!</Subtitle>
+      </Header>
+      {loading && <Loading>Wait a Minute</Loading>}
+      {!loading && data && (
+        <Movies>
+          {data.movies.map((movie) => (
             <Movie
               key={movie.id}
               id={movie.id}
@@ -50,8 +82,8 @@ export const Home = () => {
               genres={movie.genres}
             />
           ))}
-        </div>
+        </Movies>
       )}
-    </section>
+    </Container>
   );
 };
