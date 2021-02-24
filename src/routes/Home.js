@@ -11,6 +11,7 @@ const GET_MOVIES = gql`
       year
       summary
       medium_cover_image
+      language
       genres
     }
   }
@@ -62,6 +63,7 @@ const Movies = styled.div`
 
 export const Home = () => {
   const { loading, data } = useQuery(GET_MOVIES);
+  console.log(data);
   return (
     <Container>
       <Header>
@@ -69,9 +71,9 @@ export const Home = () => {
         <Subtitle>Try this!</Subtitle>
       </Header>
       {loading && <Loading>Wait a Minute</Loading>}
-      {!loading && data && (
+      {!loading && (
         <Movies>
-          {data.movies.map((movie) => (
+          {data?.movies?.map((movie) => (
             <Movie
               key={movie.id}
               id={movie.id}

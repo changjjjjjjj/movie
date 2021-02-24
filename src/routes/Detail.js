@@ -1,3 +1,4 @@
+import { Navigation } from "../components/Navigation";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
@@ -9,7 +10,7 @@ const GET_MOVIE = gql`
       title
       medium_cover_image
       rating
-      summary
+      description_intro
       language
     }
   }
@@ -20,14 +21,20 @@ const Container = styled.div`
   background-image: linear-gradient(-45deg, #d754ab, #fd723a);
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
   color: white;
 `;
 
 const Column = styled.div`
   margin-left: 10px;
   width: 50%;
+`;
+
+const Row = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const Title = styled.h1`
@@ -45,11 +52,13 @@ const Description = styled.p`
 `;
 
 const Poster = styled.div`
-  width: 25%;
-  height: 60%;
+  width: 30%;
+  height: 100%;
+  object-fit: cover;
   background-color: transparent;
   background-image: url(${(props) => props.bg});
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center center;
 `;
 
@@ -62,14 +71,17 @@ export const Detail = () => {
 
   return (
     <Container>
-      <Column>
-        <Title>{loading ? "Loading..." : `${data.movie.title}`}</Title>
-        <Subtitle>
-          {data?.movie?.language} · {data?.movie?.rating}
-        </Subtitle>
-        <Description>{data?.movie?.summary}</Description>
-      </Column>
-      <Poster bg={data?.movie.medium_cover_image}></Poster>
+      <Navigation />
+      <Row>
+        <Column>
+          <Title>{loading ? "Loading..." : `${data.movie.title}`}</Title>
+          <Subtitle>
+            {data?.movie?.language} · {data?.movie?.rating}
+          </Subtitle>
+          <Description>{data?.movie?.description_intro}</Description>
+        </Column>
+        <Poster bg={data?.movie?.medium_cover_image}></Poster>
+      </Row>
     </Container>
   );
 };
